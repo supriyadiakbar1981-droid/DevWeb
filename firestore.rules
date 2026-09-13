@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ---- users ----
+    match /users/{uid} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(uid);
+      // User boleh update datanya sendiri TAPI tidak boleh mengubah
+      // points / isBlocked / isAdmin (field itu hanya oleh admin).
+      allow update: if isAdmin() || (
+        isOwner(uid) &&
+        request.resource.data.points == resource.data.points &&
+        request.resource.data.isBlocked == resource.data.isBlocked &&
+        request.resource.data.isAdmin == resource.data.isAdmin
+      );
+      allow delete: if isAdmin();
+    }
+
+    // ---- topupRequests ----
+    match /topupRequests/{id} {
+      allow read: if isSignedIn() && (isAdmin() || resource.data.uid == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid && request.resource.data.status == "pending";
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---- questionSets ----
+    match /questionSets/{id} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.createdBy == request.auth.uid;
+      allow update, delete: if isAdmin() || (isSignedIn() && resource.data.createdBy == request.auth.uid);
+    }
+
+    // ---- rooms ----
+    match /rooms/{id} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.hostUid == request.auth.uid;
+      // Update dibolehkan untuk anggota room (join, jawab, dsb) atau host/admin.
+      allow update: if isSignedIn();
+      allow delete: if isAdmin() || (isSignedIn() && resource.data.hostUid == request.auth.uid);
+    }
+  }
+}

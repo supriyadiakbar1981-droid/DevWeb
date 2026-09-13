@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="dashboard.html"><span class="dot"></span> RAME!</a>
+    <div class="topbar-right">
+      <div class="userchip"><div class="avatar" id="avatarLetter">?</div><span id="usernameLabel">...</span></div>
+      <a class="btn btn-ghost btn-sm" href="dashboard.html">Keluar Room</a>
+    </div>
+  </div>
+
+  <div class="wrap wrap--narrow" id="roomRoot">
+    <div class="card" style="margin-top:24px; text-align:center;">
+      <div class="spinner"></div>
+      <p style="margin-top:10px; color:var(--cream-dim);">Memuat room...</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/room.js"></script>
+</body>
+</html>

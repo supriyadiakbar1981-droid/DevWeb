@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="admin.html"><span class="dot"></span> RAME! <span class="badge badge-duel" style="margin-left:6px;">Admin</span></a>
+    <div class="topbar-right">
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Keluar</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid grid-3" id="statCards">
+      <div class="card"><p class="help">Total User</p><h2 id="statTotal">-</h2></div>
+      <div class="card"><p class="help">Sedang Online</p><h2 id="statOnline">-</h2></div>
+      <div class="card"><p class="help">Permintaan Top Up Pending</p><h2 id="statPending">-</h2></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title"><h2>Permintaan Top Up</h2></div>
+      <div id="pendingTopups"><div class="empty">Memuat...</div></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title"><h2>Semua User</h2></div>
+      <div class="table-wrap">
+        <table class="table" id="usersTable">
+          <thead>
+            <tr><th>Status</th><th>Username</th><th>Email</th><th>Poin</th><th>Isi Poin</th><th>Aksi</th></tr>
+          </thead>
+          <tbody id="usersBody"><tr><td colspan="6">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="index.html"><span class="dot"></span> RAME!</a>
+    <div class="topbar-right">
+      <a class="btn btn-ghost btn-sm" href="register.html">Belum punya akun</a>
+    </div>
+  </div>
+
+  <div class="wrap wrap--narrow">
+    <div class="card" style="margin-top:30px;">
+      <h2>Masuk</h2>
+
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="email@contoh.com">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="password kamu">
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px;" id="submitBtn">Masuk</button>
+        <div class="err" id="errMsg" style="display:none;"></div>
+      </form>
+
+      <p class="help" style="text-align:center; margin-top:18px;">
+        Kamu admin? <a href="admin-login.html" style="color:var(--lime); font-weight:700;">Masuk sebagai admin</a>
+      </p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { loginUser } from "./js/auth.js";
+
+    const form = document.getElementById("loginForm");
+    const errMsg = document.getElementById("errMsg");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errMsg.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Masuk...";
+      try {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        await loginUser(email, password);
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        errMsg.textContent = friendlyError(err);
+        errMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Masuk";
+      }
+    });
+
+    function friendlyError(err) {
+      const code = err.code || "";
+      if (code.includes("user-not-found") || code.includes("invalid-credential") || code.includes("wrong-password")) {
+        return "Email atau password salah.";
+      }
+      if (code.includes("too-many-requests")) return "Terlalu banyak percobaan. Coba lagi nanti.";
+      return err.message || "Terjadi kesalahan. Coba lagi.";
+    }
+  </script>
+</body>
+</html>

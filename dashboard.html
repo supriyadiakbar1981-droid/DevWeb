@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="dashboard.html"><span class="dot"></span> RAME!</a>
+    <div class="topbar-right">
+      <div class="points-pill">⭐ <span id="pointsVal">0</span> poin</div>
+      <div class="userchip">
+        <div class="avatar" id="avatarLetter">?</div>
+        <span id="usernameLabel">...</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Keluar</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="grid grid-2">
+      <!-- Join room -->
+      <div class="card">
+        <h3>Gabung Room</h3>
+        <p class="help" style="margin-top:-6px;">Masukkan kode 6-digit dari temanmu.</p>
+        <form id="joinForm">
+          <input type="text" id="joinCode" maxlength="6" placeholder="MISAL: 7XQ2KP" style="text-transform:uppercase; letter-spacing:3px; font-family:var(--font-display); font-weight:700;">
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:14px;">Gabung</button>
+          <div class="err" id="joinErr" style="display:none;"></div>
+        </form>
+      </div>
+
+      <!-- Topup -->
+      <div class="card">
+        <h3>Top Up Poin</h3>
+        <p class="help" style="margin-top:-6px;">Kirim permintaan, admin akan isi poin secara manual.</p>
+        <form id="topupForm">
+          <div class="field-row">
+            <input type="number" id="topupAmount" min="1" placeholder="Jumlah poin" required>
+          </div>
+          <input type="text" id="topupNote" placeholder="Catatan (opsional)" style="margin-top:10px;">
+          <button type="submit" class="btn btn-info btn-block" style="margin-top:14px;">Kirim Permintaan</button>
+          <div class="ok" id="topupOk" style="display:none;"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Create room -->
+    <div class="card" style="margin-top:20px;">
+      <h3>Buat Room</h3>
+      <p class="help" style="margin-top:-6px;">Biaya <strong id="costRoomLabel">50</strong> poin per room.</p>
+
+      <label>Mode Permainan</label>
+      <div class="tabs" id="typeTabs">
+        <button type="button" class="tab-btn active" data-type="tebak-kata">Tebak Kata</button>
+        <button type="button" class="tab-btn" data-type="tebak-gambar">Tebak Gambar</button>
+        <button type="button" class="tab-btn" data-type="kuis-tim">Kuis Tim</button>
+        <button type="button" class="tab-btn" data-type="duel">Duel 1v1</button>
+      </div>
+
+      <div id="duelSubTypeWrap" style="display:none;">
+        <label>Tipe Soal Duel</label>
+        <div class="tabs" id="duelSubTabs">
+          <button type="button" class="tab-btn active" data-subtype="tebak-kata">Tebak Kata</button>
+          <button type="button" class="tab-btn" data-subtype="tebak-gambar">Tebak Gambar</button>
+        </div>
+      </div>
+
+      <label for="questionSetSelect">Set Soal</label>
+      <select id="questionSetSelect"></select>
+      <p class="help">Tidak ada set soal yang cocok? <a href="create-soal.html" style="color:var(--lime); font-weight:700;">Buat set soal baru</a></p>
+
+      <button type="button" class="btn btn-primary btn-block" id="createRoomBtn" style="margin-top:14px;">Buat Room</button>
+      <div class="err" id="createErr" style="display:none;"></div>
+    </div>
+
+    <!-- Riwayat topup -->
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title"><h2>Riwayat Top Up</h2></div>
+      <div class="table-wrap">
+        <table class="table" id="topupTable">
+          <thead><tr><th>Jumlah</th><th>Catatan</th><th>Status</th></tr></thead>
+          <tbody id="topupBody"><tr><td colspan="3">Memuat...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Room publik -->
+    <div class="card" style="margin-top:20px;">
+      <div class="section-title"><h2>Room Menunggu Pemain</h2></div>
+      <div id="publicRooms"><div class="empty">Memuat room...</div></div>
+    </div>
+
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

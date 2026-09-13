@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="index.html"><span class="dot"></span> RAME!</a>
+    <div class="topbar-right">
+      <a class="btn btn-ghost btn-sm" href="login.html">Login user</a>
+    </div>
+  </div>
+
+  <div class="wrap wrap--narrow">
+    <div class="card" style="margin-top:30px; border-color: var(--pink);">
+      <span class="badge badge-duel">Khusus Admin</span>
+      <h2>Login Admin</h2>
+      <p style="color:var(--cream-dim); margin-top:-8px;">Kelola user, isi poin, dan blokir akun dari sini.</p>
+
+      <form id="adminForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" required value="admin" placeholder="admin">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="admin12345">
+
+        <button type="submit" class="btn btn-duel btn-block" style="margin-top:20px;" id="submitBtn">Login Admin</button>
+        <div class="err" id="errMsg" style="display:none;"></div>
+      </form>
+      <p class="help">Login pertama kali dengan admin / admin12345 otomatis membuat akun admin di project Firebase kamu.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { loginAdmin } from "./js/auth.js";
+
+    const form = document.getElementById("adminForm");
+    const errMsg = document.getElementById("errMsg");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errMsg.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Masuk...";
+      try {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        await loginAdmin(username, password);
+        window.location.href = "admin.html";
+      } catch (err) {
+        errMsg.textContent = err.message || "Terjadi kesalahan.";
+        errMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login Admin";
+      }
+    });
+  </script>
+</body>
+</html>

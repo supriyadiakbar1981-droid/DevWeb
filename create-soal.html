@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buat Set Soal — RAME!</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="dashboard.html"><span class="dot"></span> RAME!</a>
+    <div class="topbar-right">
+      <div class="points-pill">⭐ <span id="pointsVal">0</span> poin</div>
+      <a class="btn btn-ghost btn-sm" href="dashboard.html">← Dashboard</a>
+    </div>
+  </div>
+
+  <div class="wrap wrap--narrow">
+    <div class="card" style="margin-top:24px;">
+      <h2>Buat Set Soal</h2>
+      <p class="help" style="margin-top:-8px;">Biaya <strong id="costLabel">20</strong> poin. Set soal ini bisa dipakai berkali-kali untuk bikin room.</p>
+
+      <label for="title">Judul Set Soal</label>
+      <input type="text" id="title" placeholder="misal: Tebak Kata - Hewan">
+
+      <label>Tipe Soal</label>
+      <div class="tabs" id="typeTabs">
+        <button type="button" class="tab-btn active" data-type="tebak-kata">Tebak Kata</button>
+        <button type="button" class="tab-btn" data-type="tebak-gambar">Tebak Gambar</button>
+        <button type="button" class="tab-btn" data-type="kuis-tim">Kuis Tim</button>
+      </div>
+
+      <div id="itemsWrap"></div>
+      <button type="button" class="btn btn-ghost btn-block" id="addItemBtn" style="margin-top:10px;">+ Tambah Soal</button>
+
+      <button type="button" class="btn btn-primary btn-block" id="saveBtn" style="margin-top:20px;">Simpan Set Soal</button>
+      <div class="err" id="errMsg" style="display:none;"></div>
+      <div class="ok" id="okMsg" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/create-soal.js"></script>
+</body>
+</html>
